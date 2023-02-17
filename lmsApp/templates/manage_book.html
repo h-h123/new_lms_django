@@ -55,14 +55,14 @@
             <label for="status" class="control-label">Status</label>
             <select type="text" id="status" name="status" class="form-select form-select-sm rounded-0" required>
                 {% if book.status == '1' %}
-                <option value="1" selected>Active</option>
+                <option value="1" selected>InStock</option>
                 {% else %}
-                <option value="1">Active</option>
+                <option value="1">InStock</option>
                 {% endif %}
                 {% if book.status == '2' %}
-                <option value="2" selected>Inactive</option>
+                <option value="2" selected>OutOfStock</option>
                 {% else %}
-                <option value="2">Inactive</option>
+                <option value="2">OutOfStock</option>
                 {% endif %}
             </select>
         </div>

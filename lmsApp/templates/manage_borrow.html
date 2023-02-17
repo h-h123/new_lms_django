@@ -52,7 +52,7 @@
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div class="mb-3">
-                    <label for="borrowing_date" class="control-label">Date Borrow</label>
+                    <label for="borrowing_date" class="control-label">Date Record</label>
                     <input type="date" id="borrowing_date" name="borrowing_date" class="form-control form-control-sm rounded-0" value="{% if borrow %}{{borrow.borrowing_date|date:'Y-m-d'}}{% else %}{% now 'Y-m-d' %}{% endif %}" required>
                 </div>
             </div>

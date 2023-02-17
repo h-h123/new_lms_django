@@ -97,7 +97,7 @@ class Borrow(models.Model):
     date_created = models.DateTimeField(auto_now = True)
 
     class Meta:
-        verbose_name_plural = "Borrowing Transactions"
+        verbose_name_plural = "Adding Record"
 
     def __str__(self):
         return str(f"{self.student.code}")

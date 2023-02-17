@@ -1223,6 +1223,7 @@
 
 .fw-bolder {
   font-weight: bolder !important;
+  /* font-size: 150 px ; */
 }
 
 .lh-1 {

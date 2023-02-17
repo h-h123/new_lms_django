@@ -441,7 +441,7 @@ def delete_book(request, pk = None):
 def students(request):
     context = context_data(request)
     context['page'] = 'student'
-    context['page_title'] = "Student List"
+    context['page_title'] = "Users List"
     context['students'] = models.Students.objects.filter(delete_flag = 0).all()
     return render(request, 'students.html', context)
 
@@ -459,9 +459,9 @@ def save_student(request):
         if form.is_valid():
             form.save()
             if post['id'] == '':
-                messages.success(request, "Student has been saved successfully.")
+                messages.success(request, "User has been saved successfully.")
             else:
-                messages.success(request, "Student has been updated successfully.")
+                messages.success(request, "User has been updated successfully.")
             resp['status'] = 'success'
         else:
             for field in form:
@@ -478,7 +478,7 @@ def save_student(request):
 def view_student(request, pk = None):
     context = context_data(request)
     context['page'] = 'view_student'
-    context['page_title'] = 'View Student'
+    context['page_title'] = 'View User'
     if pk is None:
         context['student'] = {}
     else:
@@ -490,7 +490,7 @@ def view_student(request, pk = None):
 def manage_student(request, pk = None):
     context = context_data(request)
     context['page'] = 'manage_student'
-    context['page_title'] = 'Manage Student'
+    context['page_title'] = 'Manage User'
     if pk is None:
         context['student'] = {}
     else:
@@ -502,14 +502,14 @@ def manage_student(request, pk = None):
 def delete_student(request, pk = None):
     resp = { 'status' : 'failed', 'msg':''}
     if pk is None:
-        resp['msg'] = 'Student ID is invalid'
+        resp['msg'] = 'User ID is invalid'
     else:
         try:
             models.Students.objects.filter(pk = pk).update(delete_flag = 1)
-            messages.success(request, "Student has been deleted successfully.")
+            messages.success(request, "User has been deleted successfully.")
             resp['status'] = 'success'
         except:
-            resp['msg'] = "Deleting Student Failed"
+            resp['msg'] = "Deleting User Failed"
 
     return HttpResponse(json.dumps(resp), content_type="application/json")
 
@@ -517,7 +517,7 @@ def delete_student(request, pk = None):
 def borrows(request):
     context = context_data(request)
     context['page'] = 'borrow'
-    context['page_title'] = "Borrowing Transaction List"
+    context['page_title'] = "Adding Record List"
     context['borrows'] = models.Borrow.objects.order_by('status').all()
     return render(request, 'borrows.html', context)
 
@@ -535,9 +535,9 @@ def save_borrow(request):
         if form.is_valid():
             form.save()
             if post['id'] == '':
-                messages.success(request, "Borrowing Transaction has been saved successfully.")
+                messages.success(request, "Adding Record has been saved successfully.")
             else:
-                messages.success(request, "Borrowing Transaction has been updated successfully.")
+                messages.success(request, "Adding Record has been updated successfully.")
             resp['status'] = 'success'
         else:
             for field in form:
@@ -554,7 +554,7 @@ def save_borrow(request):
 def view_borrow(request, pk = None):
     context = context_data(request)
     context['page'] = 'view_borrow'
-    context['page_title'] = 'View Transaction Details'
+    context['page_title'] = 'View Record Details'
     if pk is None:
         context['borrow'] = {}
     else:
@@ -566,7 +566,7 @@ def view_borrow(request, pk = None):
 def manage_borrow(request, pk = None):
     context = context_data(request)
     context['page'] = 'manage_borrow'
-    context['page_title'] = 'Manage Transaction Details'
+    context['page_title'] = 'Manage Record Details'
     if pk is None:
         context['borrow'] = {}
     else:
@@ -579,13 +579,13 @@ def manage_borrow(request, pk = None):
 def delete_borrow(request, pk = None):
     resp = { 'status' : 'failed', 'msg':''}
     if pk is None:
-        resp['msg'] = 'Transaction ID is invalid'
+        resp['msg'] = 'Record ID is invalid'
     else:
         try:
             models.Borrow.objects.filter(pk = pk).delete()
-            messages.success(request, "Transaction has been deleted successfully.")
+            messages.success(request, "Record has been deleted successfully.")
             resp['status'] = 'success'
         except:
-            resp['msg'] = "Deleting Transaction Failed"
+            resp['msg'] = "Deleting Record Failed"
 
     return HttpResponse(json.dumps(resp), content_type="application/json")

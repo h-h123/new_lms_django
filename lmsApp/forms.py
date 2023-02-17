@@ -173,7 +173,7 @@ class SaveBook(forms.ModelForm):
                 book = models.Books.objects.get(isbn = isbn, delete_flag = 0)
         except:
             return isbn
-        raise forms.ValidationError("ISBN already exists on the Database.")
+        raise forms.ValidationError("ID already exists on the Database.")
   
 class SaveStudent(forms.ModelForm):
     code = forms.CharField(max_length=250)
@@ -202,7 +202,7 @@ class SaveStudent(forms.ModelForm):
                 book = models.Books.objects.get(code = code, delete_flag = 0)
         except:
             return code
-        raise forms.ValidationError("Student School Id already exists on the Database.")
+        raise forms.ValidationError("User Id already exists on the Database.")
     
 class SaveBorrow(forms.ModelForm):
     student = forms.CharField(max_length=250)
