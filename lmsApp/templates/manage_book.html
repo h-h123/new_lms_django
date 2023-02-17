@@ -45,15 +45,15 @@
         </div>
         <div class="mb-3">
             <label for="publisher" class="control-label">Publisher</label>
-            <input type="text" id="publisher" name="publisher" class="form-control form-control-sm rounded-0" value="{{book.publisher}}" required>
+            <input type="text" id="publisher" name="publisher" class="form-control form-control-sm rounded-0" value="{{book.publisher}}">
         </div>
         <div class="mb-3">
             <label for="date_published" class="control-label">Date Published</label>
-            <input type="date" id="date_published" name="date_published" class="form-control form-control-sm rounded-0" value="{{book.date_published|date:'Y-m-d'}}" required>
+            <input type="date" id="date_published" name="date_published" class="form-control form-control-sm rounded-0" value="{{book.date_published|date:'Y-m-d'}}">
         </div>
         <div class="mb-3">
             <label for="status" class="control-label">Status</label>
-            <select type="text" id="status" name="status" class="form-select form-select-sm rounded-0" required>
+            <select type="text" id="status" name="status" class="form-select form-select-sm rounded-0">
                 {% if book.status == '1' %}
                 <option value="1" selected>InStock</option>
                 {% else %}

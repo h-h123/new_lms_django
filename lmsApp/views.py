@@ -579,7 +579,7 @@ def manage_borrow(request, pk = None):
 def delete_borrow(request, pk = None):
     resp = { 'status' : 'failed', 'msg':''}
     if pk is None:
-        resp['msg'] = 'Record ID is invalid'
+        resp['msg'] = 'Record  is invalid'
     else:
         try:
             models.Borrow.objects.filter(pk = pk).delete()
