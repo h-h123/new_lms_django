@@ -67,14 +67,14 @@
                     <label for="status" class="control-label">Status</label>
                     <select type="text" id="status" name="status" class="form-select form-select-sm rounded-0" required>
                         {% if borrow.status == '1' %}
-                        <option value="1" selected>Pending</option>
+                        <option value="1" selected> Book Pending</option>
                         {% else %}
-                        <option value="1">Pending</option>
+                        <option value="1">Book Pending</option>
                         {% endif %}
                         {% if borrow.status == '2' %}
-                        <option value="2" selected>Returned</option>
+                        <option value="2" selected>Book Returned</option>
                         {% else %}
-                        <option value="2">Returned</option>
+                        <option value="2">Book Returned</option>
                         {% endif %}
                     </select>
                 </div>
