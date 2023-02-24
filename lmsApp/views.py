@@ -8,7 +8,9 @@ from lmsApp import models, forms
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_protect
 
+@csrf_protect
 def context_data(request):
     fullpath = request.get_full_path()
     abs_uri = request.build_absolute_uri()
@@ -23,7 +25,7 @@ def context_data(request):
     }
 
     return context
-    
+@csrf_protect
 def userregister(request):
     context = context_data(request)
     context['topbar'] = False
@@ -32,7 +34,7 @@ def userregister(request):
     if request.user.is_authenticated:
         return redirect("home-page")
     return render(request, 'register.html', context)
-
+@csrf_protect
 def save_register(request):
     resp={'status':'failed', 'msg':''}
     if not request.method == 'POST':
@@ -52,6 +54,7 @@ def save_register(request):
             
     return HttpResponse(json.dumps(resp), content_type="application/json")
 
+@csrf_protect
 @login_required
 def update_profile(request):
     context = context_data(request)
@@ -72,6 +75,7 @@ def update_profile(request):
             
     return render(request, 'manage_profile.html',context)
 
+@csrf_protect
 @login_required
 def update_password(request):
     context =context_data(request)
@@ -90,6 +94,7 @@ def update_password(request):
         context['form'] = form
     return render(request,'update_password.html',context)
 
+@csrf_protect
 # Create your views here.
 def login_page(request):
     context = context_data(request)
@@ -98,7 +103,7 @@ def login_page(request):
     context['page_name'] = 'login'
     context['page_title'] = 'Login'
     return render(request, 'login.html', context)
-
+@csrf_protect
 def login_user(request):
     logout(request)
     resp = {"status":'failed','msg':''}
@@ -118,7 +123,7 @@ def login_user(request):
         else:
             resp['msg'] = "Incorrect username or password"
     return HttpResponse(json.dumps(resp),content_type='application/json')
-
+@csrf_protect
 @login_required
 def home(request):
     context = context_data(request)
@@ -137,14 +142,15 @@ def home(request):
 def logout_user(request):
     logout(request)
     return redirect('login-page')
-    
+
+@csrf_protect   
 @login_required
 def profile(request):
     context = context_data(request)
     context['page'] = 'profile'
     context['page_title'] = "Profile"
     return render(request,'profile.html', context)
-
+@csrf_protect
 @login_required
 def users(request):
     context = context_data(request)
@@ -152,7 +158,7 @@ def users(request):
     context['page_title'] = "User List"
     context['users'] = User.objects.exclude(pk=request.user.pk).filter(is_superuser = False).all()
     return render(request, 'users.html', context)
-
+@csrf_protect
 @login_required
 def save_user(request):
     resp = { 'status': 'failed', 'msg' : '' }
@@ -182,6 +188,7 @@ def save_user(request):
 
     return HttpResponse(json.dumps(resp), content_type="application/json")
 
+@csrf_protect
 @login_required
 def manage_user(request, pk = None):
     context = context_data(request)
@@ -194,6 +201,7 @@ def manage_user(request, pk = None):
     
     return render(request, 'manage_user.html', context)
 
+@csrf_protect
 @login_required
 def delete_user(request, pk = None):
     resp = { 'status' : 'failed', 'msg':''}
@@ -209,6 +217,7 @@ def delete_user(request, pk = None):
 
     return HttpResponse(json.dumps(resp), content_type="application/json")
 
+@csrf_protect
 @login_required
 def category(request):
     context = context_data(request)
@@ -217,6 +226,7 @@ def category(request):
     context['category'] = models.Category.objects.filter(delete_flag = 0).all()
     return render(request, 'category.html', context)
 
+@csrf_protect
 @login_required
 def save_category(request):
     resp = { 'status': 'failed', 'msg' : '' }
@@ -246,6 +256,7 @@ def save_category(request):
 
     return HttpResponse(json.dumps(resp), content_type="application/json")
 
+@csrf_protect
 @login_required
 def view_category(request, pk = None):
     context = context_data(request)
@@ -258,6 +269,7 @@ def view_category(request, pk = None):
     
     return render(request, 'view_category.html', context)
 
+@csrf_protect
 @login_required
 def manage_category(request, pk = None):
     context = context_data(request)
@@ -270,6 +282,7 @@ def manage_category(request, pk = None):
     
     return render(request, 'manage_category.html', context)
 
+@csrf_protect
 @login_required
 def delete_category(request, pk = None):
     resp = { 'status' : 'failed', 'msg':''}
@@ -285,6 +298,7 @@ def delete_category(request, pk = None):
 
     return HttpResponse(json.dumps(resp), content_type="application/json")
 
+@csrf_protect
 @login_required
 def sub_category(request):
     context = context_data(request)
@@ -293,6 +307,7 @@ def sub_category(request):
     context['sub_category'] = models.SubCategory.objects.filter(delete_flag = 0).all()
     return render(request, 'sub_category.html', context)
 
+@csrf_protect
 @login_required
 def save_sub_category(request):
     resp = { 'status': 'failed', 'msg' : '' }
@@ -322,6 +337,7 @@ def save_sub_category(request):
 
     return HttpResponse(json.dumps(resp), content_type="application/json")
 
+@csrf_protect
 @login_required
 def view_sub_category(request, pk = None):
     context = context_data(request)
@@ -334,6 +350,7 @@ def view_sub_category(request, pk = None):
     
     return render(request, 'view_sub_category.html', context)
 
+@csrf_protect
 @login_required
 def manage_sub_category(request, pk = None):
     context = context_data(request)
@@ -346,6 +363,7 @@ def manage_sub_category(request, pk = None):
     context['categories'] = models.Category.objects.filter(delete_flag = 0, status = 1).all()
     return render(request, 'manage_sub_category.html', context)
 
+@csrf_protect
 @login_required
 def delete_sub_category(request, pk = None):
     resp = { 'status' : 'failed', 'msg':''}
@@ -360,7 +378,7 @@ def delete_sub_category(request, pk = None):
             resp['msg'] = "Deleting Sub Category Failed"
 
     return HttpResponse(json.dumps(resp), content_type="application/json")
-
+@csrf_protect
 @login_required
 def books(request):
     context = context_data(request)
@@ -369,6 +387,7 @@ def books(request):
     context['books'] = models.Books.objects.filter(delete_flag = 0).all()
     return render(request, 'books.html', context)
 
+@csrf_protect
 @login_required
 def save_book(request):
     resp = { 'status': 'failed', 'msg' : '' }
@@ -398,6 +417,7 @@ def save_book(request):
 
     return HttpResponse(json.dumps(resp), content_type="application/json")
 
+@csrf_protect
 @login_required
 def view_book(request, pk = None):
     context = context_data(request)
@@ -410,6 +430,7 @@ def view_book(request, pk = None):
     
     return render(request, 'view_book.html', context)
 
+@csrf_protect
 @login_required
 def manage_book(request, pk = None):
     context = context_data(request)
@@ -422,6 +443,7 @@ def manage_book(request, pk = None):
     context['sub_categories'] = models.SubCategory.objects.filter(delete_flag = 0, status = 1).all()
     return render(request, 'manage_book.html', context)
 
+@csrf_protect
 @login_required
 def delete_book(request, pk = None):
     resp = { 'status' : 'failed', 'msg':''}
@@ -437,6 +459,7 @@ def delete_book(request, pk = None):
 
     return HttpResponse(json.dumps(resp), content_type="application/json")
 
+@csrf_protect
 @login_required
 def students(request):
     context = context_data(request)
@@ -445,6 +468,7 @@ def students(request):
     context['students'] = models.Students.objects.filter(delete_flag = 0).all()
     return render(request, 'students.html', context)
 
+@csrf_protect
 @login_required
 def save_student(request):
     resp = { 'status': 'failed', 'msg' : '' }
@@ -474,6 +498,7 @@ def save_student(request):
 
     return HttpResponse(json.dumps(resp), content_type="application/json")
 
+@csrf_protect
 @login_required
 def view_student(request, pk = None):
     context = context_data(request)
@@ -486,6 +511,7 @@ def view_student(request, pk = None):
     
     return render(request, 'view_student.html', context)
 
+@csrf_protect
 @login_required
 def manage_student(request, pk = None):
     context = context_data(request)
@@ -498,6 +524,7 @@ def manage_student(request, pk = None):
     context['sub_categories'] = models.SubCategory.objects.filter(delete_flag = 0, status = 1).all()
     return render(request, 'manage_student.html', context)
 
+@csrf_protect
 @login_required
 def delete_student(request, pk = None):
     resp = { 'status' : 'failed', 'msg':''}
@@ -513,6 +540,7 @@ def delete_student(request, pk = None):
 
     return HttpResponse(json.dumps(resp), content_type="application/json")
 
+@csrf_protect
 @login_required
 def borrows(request):
     context = context_data(request)
@@ -521,6 +549,7 @@ def borrows(request):
     context['borrows'] = models.Borrow.objects.order_by('status').all()
     return render(request, 'borrows.html', context)
 
+@csrf_protect
 @login_required
 def save_borrow(request):
     resp = { 'status': 'failed', 'msg' : '' }
@@ -550,6 +579,7 @@ def save_borrow(request):
 
     return HttpResponse(json.dumps(resp), content_type="application/json")
 
+@csrf_protect
 @login_required
 def view_borrow(request, pk = None):
     context = context_data(request)
@@ -562,6 +592,7 @@ def view_borrow(request, pk = None):
     
     return render(request, 'view_borrow.html', context)
 
+@csrf_protect
 @login_required
 def manage_borrow(request, pk = None):
     context = context_data(request)
@@ -575,6 +606,7 @@ def manage_borrow(request, pk = None):
     context['books'] = models.Books.objects.filter(delete_flag = 0, status = 1).all()
     return render(request, 'manage_borrow.html', context)
 
+@csrf_protect
 @login_required
 def delete_borrow(request, pk = None):
     resp = { 'status' : 'failed', 'msg':''}
